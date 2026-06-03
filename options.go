@@ -48,13 +48,13 @@ func WithBody(v any) Option {
 		}
 
 		switch t := v.(type) {
-		case io.Reader: // support for basic readers
-			r.body = t
-			return nil
 		case *multipart.Streamer: // support for multipart streaming
 			setHeader(r.headers, HeaderContentType, t.ContentType())
 			setHeader(r.headers, HeaderContentLength, t.Len())
 
+			r.body = t
+			return nil
+		case io.Reader: // support for basic readers
 			r.body = t
 			return nil
 		case []byte: // support for basic byte slices
