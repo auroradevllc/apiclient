@@ -58,11 +58,11 @@ func WithBody(v any) Option {
 			r.body = t
 			return nil
 		case []byte: // support for basic byte slices
-			setHeader(r.headers, HeaderContentType, len(t))
+			setHeader(r.headers, HeaderContentLength, len(t))
 			r.body = bytes.NewReader(t)
 			return nil
 		case string:
-			setHeader(r.headers, HeaderContentType, len(t))
+			setHeader(r.headers, HeaderContentLength, len(t))
 			r.body = strings.NewReader(t)
 			return nil
 		case url.Values:
